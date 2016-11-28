@@ -1,0 +1,41 @@
+{% extends 'crowdsrc/base.html' %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3></h3>
+        </div>
+        {% if all_tasks %}
+            {% for task in all_tasks %}
+                <div class="col-sm-4 col-lg-3">
+
+                        <div class="panel-body">
+                            <a href="{% url 'crowdsrc:detail' task.id %}">
+                            <h2>{{ task.task_title }}</h2>
+                            </a>
+                            <h4>{{ task.requester }}</h4>
+                            <p>{{ task.description }} <p>
+
+                            <a href="{% url 'crowdsrc:detail' task.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+
+                        </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'crowdsrc:create_task' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Task
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

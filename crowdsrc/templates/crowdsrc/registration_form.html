@@ -1,0 +1,62 @@
+{% extends 'crowdsrc/base.html' %}
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-sm-12 com-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Create a New account</h3>
+                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'music/form-template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Submit </button>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+
+<!--{% extends 'crowdsrc/base.html' %}
+{% block body %}
+    <h1>{{ task.task_title }}</h1>
+    <h3>{{ task.requester }}</h3>
+
+    <ul>
+        {% for subtask in task.subtask_set.all %}
+            <li>{{ subtask.subtask_title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+
+    {% if all_tasks %}
+        <h3> here are my all tasks: </h3>
+        <u1>
+            {% for task in all_tasks %}
+            <li><a href ="{% url 'crowdsrc:detail' task.id %}"> {{ task.task_title}} </a></li>{% endfor %}
+        </u1>
+    {% else %}
+        <h3> you don't have any tasks </h3>
+    {% endif %}
+
+
+-->

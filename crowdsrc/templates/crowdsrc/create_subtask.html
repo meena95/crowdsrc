@@ -1,0 +1,59 @@
+{% extends 'crowdsrc/base.html' %}
+{% block title %}Add a New Subtask{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Left Task Info -->
+        <div class="col-sm-4 col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h1>{{ task.task_title }}</h1>
+                    <h2>{{ task.requester }}</h2>
+                    <br>
+                    <h4>things to focus while making subtask </h4>
+                    <p><li>should contain a complete sentence or set of instructions.</li>
+                    <li>It should explains clearly what a crowd should do.</li>
+                    <li>Sentence explains clearly what a crowd should do.</li>
+                    <li>Every step can be understood by itself without reading the original task.</li></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Subtask Info -->
+        <div class="col-sm-8 col-md-7">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation"><a href="{% url 'crowdsrc:detail' task.id %}">View All</a></li>
+                <li role="presentation" class="active"><a href="{% url 'crowdsrc:create_subtask' task.id %}">Add New Subtask</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Add a New Subtask</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="task" value="{{ task }}">
+                        {% include 'crowdsrc/form-template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'crowdsrc/base.html' %}
+{% block title %}{{ task }}{% endblock %}
+{% block tasks_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+
+        <!-- Left Task Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <a href="{% url 'crowdsrc:detail' task.id %}">
+                    </a>
+
+                    <h1>{{ task.task_title }} </h1>
+                    <h2> By: {{ task.requester }}</h2>
+                    <p>{{ task.description}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'crowdsrc:detail' task.id %}">View All</a></li>
+                <li role="presentation"><a href="{% url 'crowdsrc:create_subtask' task.id %}"><span class="glyphicon glyphicon-plus"></span> Add Subtasks</a></li>
+                <div class="fb-like" data-href="{% url 'crowdsrc:detail' task.id %}" data-layout="box_count" data-action="like" data-size="large" data-show-faces="false" data-share="false"></div>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>Here are all Subtasks for this Task</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+
+                            <th>Instructions</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for subtask in task.subtask_set.all %}
+                            <tr>
+                                <td><a href="{% url 'crowdsrc:detail_subtask' subtask.id %}" >{{ subtask.subtask_title }}</a></td>
+                                <td>{{ subtask.instructions }}</td>
+                                <td>
+                                    <form action="{% url 'crowdsrc:detail' task.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="subtask_id" value="{{ subtask.id }}" />
+                                        <button type="submit" class="btn btn-success btn-xs">
+                                            <a href="{% url 'crowdsrc:create_subtask' task.id %}"><span class="glyphicon glyphicon-plus"></span>&nbsp; add subtask</a>
+                                        </button>
+                                    </form>
+                                    <br>
+
+                                    <form action="{% url 'crowdsrc:create_solution' subtask.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="subtask_id" value="{{ subtask.id }}" />
+                                        <button type="submit" class="btn btn-success btn-xs">
+                                            <a href="{% url 'crowdsrc:create_solution' subtask.id %}"><span class="glyphicon glyphicon-edit"></span>&nbsp;  solve </a>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

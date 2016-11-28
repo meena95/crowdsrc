@@ -1,0 +1,50 @@
+{% extends 'crowdsrc/base.html' %}
+{% block title %}{{ task }}{% endblock %}
+{% block tasks_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+
+        <!-- Left Task Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h2><strong>Title-</strong><br>{{ subtask.subtask_title }} </h2>
+                    <p><strong>Instructions -</strong><br>{{ subtask.instructions}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8 col-md-9">
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <h1> All solutions are as: </h1>
+                    {% for solution in subtask.solution_set.all %}
+                    <li> <h3>{{ solution.submit_solution }} </h3>
+                    <div class="fb-like" data-href="{% url 'crowdsrc:detail_subtask' solution.id %}" data-layout="box_count" data-action="like" data-size="large" data-show-faces="false" data-share="false"></div>
+
+                    </li>
+
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
